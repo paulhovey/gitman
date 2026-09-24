@@ -180,6 +180,17 @@ def describe_config():
                 )
             ) == ["repo1"]
 
+        def it_returns_all_when_default_group_is_blank(config):
+            config.sources = [Source(repo="http://example.com/repo1", name="repo1")]
+            config.groups = [Group(name="empty", members=None)]
+            config.default_group = ""
+
+            expect(
+                config._get_sources_filter(
+                    sources=config.sources, skip_default_group=False
+                )
+            ) == ["repo1"]
+
 
 class TestLoad:
     def test_load_from_directory_with_config_file(self):
