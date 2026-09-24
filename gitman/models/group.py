@@ -1,5 +1,5 @@
-from dataclasses import dataclass
-from typing import List
+from dataclasses import dataclass, field
+from typing import List, Optional
 
 
 @dataclass
@@ -7,7 +7,11 @@ class Group:
     """A group with sources."""
 
     name: str
-    members: List[str]
+    members: Optional[List[str]] = field(default_factory=list)
+
+    def __post_init__(self):
+        if self.members is None:
+            self.members = []
 
     def __repr__(self):
         return "<group {}>".format(self)
